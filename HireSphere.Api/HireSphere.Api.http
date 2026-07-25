@@ -1,0 +1,6 @@
+@TalentPulse.Api_HostAddress = http://localhost:5009
+
+GET {{TalentPulse.Api_HostAddress}}/
+Accept: application/json
+
+###
