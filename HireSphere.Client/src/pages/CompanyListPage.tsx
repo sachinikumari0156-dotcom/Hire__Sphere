@@ -1,0 +1,13 @@
+import React, { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Building2, Globe2, MapPin, Search } from 'lucide-react'
+import { apiClient } from '@services/api'
+import { CompanyListResponse } from '@/types'
+
+const CompanyListPage: React.FC = () => {
+ const [companies, setCompanies] = useState<CompanyListResponse[]>([]); const [query, setQuery] = useState(''); const [loading, setLoading] = useState(true); const [error, setError] = useState('')
+ useEffect(() => { apiClient.getCompanies().then(r => setCompanies(r.data.data || [])).catch(() => setError('We could not load companies right now.')).finally(() => setLoading(false)) }, [])
+ const shown = useMemo(() => companies.filter(c => `${c.name} ${c.location}`.toLowerCase().includes(query.toLowerCase())), [companies, query])
+ return <div className="section container"><p className="eyebrow">Company directory</p><div className="mt-2 flex flex-wrap items-end justify-between gap-5"><div><h1 className="page-title">Meet teams doing meaningful work.</h1><p className="mt-3 text-slate-600">Get to know the companies behind the opportunities.</p></div><div className="flex w-full items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 sm:w-80"><Search size={18} className="text-slate-400"/><input className="w-full outline-none" placeholder="Search companies" value={query} onChange={e => setQuery(e.target.value)} /></div></div>{loading ? <p className="py-16 text-center text-slate-500">Loading companies…</p> : error ? <p className="py-16 text-center text-rose-600">{error}</p> : <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{shown.map(company => <article key={company.id} className="card group flex flex-col transition hover:-translate-y-1 hover:shadow-lg"><span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-indigo-100 to-cyan-100 text-indigo-700"><Building2 size={22}/></span><h2 className="mt-5 text-xl font-bold">{company.name}</h2><p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-600">{company.description || 'Learn about the people, work, and opportunities at this company.'}</p><div className="mt-5 space-y-2 text-sm text-slate-500">{company.location && <p className="flex items-center gap-2"><MapPin size={16}/>{company.location}</p>}{company.website && <p className="flex items-center gap-2"><Globe2 size={16}/>Website available</p>}</div><Link to={`/company/${company.id}`} className="mt-6 text-sm font-bold text-indigo-600">View company →</Link></article>)}</div>}{!loading && !error && !shown.length && <div className="card mt-8 py-16 text-center text-slate-500">No companies match that search.</div>}</div>
+}
+export default CompanyListPage

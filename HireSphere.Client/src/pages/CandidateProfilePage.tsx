@@ -1,0 +1,5 @@
+import React from 'react'
+import { Award, FileText, UserRound } from 'lucide-react'
+
+const CandidateProfilePage: React.FC = () => <div className="section container max-w-4xl"><p className="eyebrow">Candidate workspace</p><h1 className="page-title mt-2">Build your profile</h1><p className="mt-3 text-slate-600">A complete profile helps teams understand what you bring to the table.</p><div className="mt-8 grid gap-5 md:grid-cols-3">{[[UserRound,'Your story','Add a clear headline and experience summary.'],[Award,'Skills & strengths','Show the skills you want to be known for.'],[FileText,'Resume','Attach your latest resume for recruiters.']].map(([Icon, title, text]) => { const ItemIcon=Icon as typeof UserRound; return <div key={title as string} className="card"><ItemIcon className="text-indigo-600"/><h2 className="mt-4 font-bold">{title as string}</h2><p className="mt-2 text-sm leading-6 text-slate-500">{text as string}</p><button className="mt-5 text-sm font-bold text-indigo-600">Add details →</button></div>})}</div></div>
+export default CandidateProfilePage

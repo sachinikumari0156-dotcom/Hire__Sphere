@@ -1,0 +1,6 @@
+import React from 'react'
+import { Building2, Plus, UsersRound } from 'lucide-react'
+import { Link } from 'react-router-dom'
+
+const RecruiterDashboardPage: React.FC = () => <div className="section container"><p className="eyebrow">Recruiter workspace</p><div className="mt-2 flex flex-wrap items-center justify-between gap-4"><div><h1 className="page-title">Make your next great hire.</h1><p className="mt-3 text-slate-600">Manage roles, review talent, and keep your hiring pipeline moving.</p></div><Link to="/companies" className="btn btn-primary"><Plus size={17}/> Create a company</Link></div><div className="mt-8 grid gap-5 md:grid-cols-3">{[[Building2,'Set up your company','Create a company profile before publishing roles.'],[Plus,'Publish a role','Share a clear, compelling opportunity with candidates.'],[UsersRound,'Review applicants','Applications will appear here as candidates apply.']].map(([Icon,title,text]) => {const ItemIcon=Icon as typeof Building2; return <div key={title as string} className="card"><ItemIcon className="text-indigo-600"/><h2 className="mt-4 font-bold">{title as string}</h2><p className="mt-2 text-sm leading-6 text-slate-500">{text as string}</p></div>})}</div></div>
+export default RecruiterDashboardPage
